@@ -1,0 +1,313 @@
+**** TYPESCRIPT SETUP ****
+- Setting up ts project
+- Configuring tsconfig.json   [tsc --init]
+- Compiling ts                [tsc file.ts]
+
+Similar to NODEMON            [tsc --watch]
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+**** BASIC DATATYPES ****
+- primitives types(number,string,boolean)
+- arrays
+- tuples
+- enums
+- any,unknown,null,void,undefined,never
+
+//Primitive and reference
+// [],{},() - if this is present it is reference
+
+
+Array ->   let numbers: number[] = [1, 2, 3, 4];
+Tuples ->  let person: [string, number] = ["Alice", 30];
+Enum ->    In TypeScript, enum is used to define a set of named constants.
+           enum Status {
+           Success = "SUCCESS",
+           Failure = "FAILURE",
+           Pending = "PENDING"
+           }
+           let currentStatus: Status = Status.Success;
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+**** HERE ARE THE KEY TYPESCRIPT TYPES IN SHORT ****
+### `any`
+Represents any value. Disables type checking, making the variable dynamic.
+
+```typescript
+let value: any = 42;
+value = "hello";  // No error
+```
+
+### `unknown`
+Represents a value of an unknown type. You need to narrow the type before using it.
+
+```typescript
+let value: unknown = "hello";
+// Need to check before using
+if (typeof value === "string") {
+  console.log(value.toUpperCase());
+}
+```
+
+### `null`
+Represents a null value, usually used with optional values.
+
+```typescript
+let value: null = null;
+```
+
+### `void`
+Typically used as the return type of functions that do not return anything.
+
+```typescript
+function logMessage(): void {
+  console.log("This function returns nothing.");
+}
+```
+
+### `undefined`
+Represents an uninitialized value.
+
+```typescript
+let value: undefined = undefined;
+```
+
+### `never`
+Represents values that never occur, used for functions that never return or throw errors.
+
+```typescript
+function error(): never {
+  throw new Error("An error occurred");
+}
+```
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+*** TYPE INFERENCE ***
+**Type Inference** in TypeScript is the ability of the compiler to automatically infer the type of a variable based on its assigned value, without explicitly defining the type.
+
+### Example:
+```typescript
+let num = 10;    // TypeScript infers `num` as `number`
+let message = "Hello";  // TypeScript infers `message` as `string`
+```
+
+Here, TypeScript automatically infers that `num` is a `number` and `message` is a `string` based on their initial values, so there's no need to explicitly declare their types.
+
+This feature makes the code cleaner and still provides type safety.
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+*** TYPE ANNOTATION ***
+**Type Annotation** in TypeScript is the explicit declaration of a variable's type. This helps provide clarity on the intended type of a variable or function and ensures type safety.
+
+### Example:
+```typescript
+let age: number = 25;
+let username: string = "Alice";
+let isActive: boolean = true;
+
+function greet(name: string): string {
+  return `Hello, ${name}`;
+}
+```
+
+### Key Points:
+- You specify the type after a colon (`:`) following the variable or parameter name.
+- It's useful when TypeScript can't infer the type or to make the code more readable and robust.
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+**** INTERFACES AND TYPES ALIASESS ****
+defining Interfacesusing interfaces to define object shapes
+extending interfaces
+type aliases
+intersection types
+
+### **Interfaces in TypeScript:**
+- Used to define the shape of an object.
+
+**Defining Interface:**
+```typescript
+interface Person {
+  name: string;
+  age: number;
+  gender?: string    // ? means it is optional
+}
+```
+
+**Using Interface:**
+```typescript
+let user: Person = { name: "John", age: 30 };
+```
+
+**Extending Interface:**
+```typescript
+interface Employee extends Person {
+  salary: number;
+}
+```
+
+### **Type Aliases:**
+- Used to create a custom name for a type.
+
+**Defining Type Alias:**
+```typescript
+type ID = number | string;
+```
+
+### **Intersection Types:**
+- Combine multiple types into one.
+
+**Example:**
+```typescript
+type Developer = { name: string };
+type Manager = { teamSize: number };
+type Lead = Developer & Manager;
+
+let lead: Lead = { name: "Alice", teamSize: 5 };
+```
+
+---------------------------------------------------------------------------------------------------------------------------------
+*** TYPE ALIASES *** 
+Here’s an example of **Type Aliases** in TypeScript:
+
+```typescript
+type StringOrNumber = string | number;  // Alias for union type
+
+let id: StringOrNumber;
+id = 101;  // Valid
+id = "A102";  // Also valid
+
+// Alias for object shape
+type Point = { x: number, y: number };
+
+let point: Point = { x: 10, y: 20 };
+```
+
+In this example:
+- `StringOrNumber` is a type alias for `string | number`.
+- `Point` is a type alias defining the shape of an object with `x` and `y` properties.
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+*** CLASSES AND OBJECTS ****
+- Class definition
+- Constructors
+- Access modifiers (public, private, protected)
+- readonly properties
+- optional properties
+- paramters properties
+- getters and setters
+- static members
+- abstract classes and methods
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+*** GENERICS ***
+
+### **Generic Functions in TypeScript:**
+- **Generic Functions** allow types to be passed as parameters.
+```typescript
+function identity<T>(arg: T): T {
+  clg(arg);
+}
+```
+
+### **Generic Interfaces:**
+- Use generics to define the types for interface properties.
+```typescript
+interface Box<T> {
+  content: T;
+}
+
+let stringBox: Box<string> = { content: "Hello" };
+```
+
+### **Generic Classes:**
+- Classes can also be made generic for handling different types.
+```typescript
+class DataHolder<T> {
+  data: T;
+  constructor(data: T) {
+    this.data = data;
+  }
+}
+```
+
+Generics enable flexible and reusable code!
+
+---------------------------------------------------------------------------------------------------------------------------------
+*** TYPE ASSERTION ***
+
+**Type assertion** in TypeScript allows you to override the inferred type and explicitly tell the compiler to treat a value as a different type.
+
+### Syntax:
+1. **Angle-bracket syntax**:
+   ```typescript
+   let value: any = "hello";
+   let strLength: number = (<string>value).length;
+   ```
+
+2. **`as` syntax** (recommended):
+   ```typescript
+   let value: any = "hello";
+   let strLength: number = (value as string).length;
+   ```
+
+This is useful when you know more about the value's type than TypeScript does, helping avoid compilation errors.**Type assertion** in TypeScript allows you to override the inferred type and explicitly tell the compiler to treat a value as a different type.
+
+### Syntax:
+1. **Angle-bracket syntax**:
+   ```typescript
+   let value: any = "hello";
+   let strLength: number = (<string>value).length;
+   ```
+
+2. **`as` syntax** (recommended):
+   ```typescript
+   let value: any = "hello";
+   let strLength: number = (value as string).length;
+   ```
+
+This is useful when you know more about the value's type than TypeScript does, helping avoid compilation errors.
+
+---------------------------------------------------------------------------------------------------------------------------------
+*** TYPE GUARDS ***
+
+**Type Guards** in TypeScript are used to narrow down the type of a variable within a conditional block. This ensures more accurate type-checking, providing better safety.
+
+### Common Type Guards:
+1. **`typeof` Guard**:
+   ```typescript
+  function checkValue(value: string | number | boolean) {
+    if (typeof value === "string") {
+        console.log(`It's a string with length: ${value.length}`);
+    } else if (typeof value === "number") {
+        console.log(`It's a number: ${value.toFixed(2)}`);
+    } else if (typeof value === "boolean") {
+        console.log(`It's a boolean: ${value ? "true" : "false"}`);
+    } else {
+        console.log("Unknown type");
+    }
+}
+
+checkValue("Hello");  // It's a string with length: 5
+checkValue(123.456);  // It's a number: 123.46
+checkValue(true);     // It's a boolean: true
+   ```
+
+2. **`instanceof` Guard**:
+   ```typescript
+   class Dog {}
+   function isDog(animal: any) {
+     return animal instanceof Dog;
+   }
+   ```
+
+Type guards allow safer handling of multiple types!
+---------------------------------------------------------------------------------------------------------------------------------
